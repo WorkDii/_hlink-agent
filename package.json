@@ -1,0 +1,28 @@
+{
+  "name": "hlink-client",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc",
+    "dev": "tsx watch src/index.ts",
+    "start": "NODE_ENV=production node dist/index.js",
+    "prestart": "npm install && npm run build"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@types/node": "^20.12.12",
+    "ts-node": "^10.9.2",
+    "tsx": "^4.10.2",
+    "typescript": "^5.4.5"
+  },
+  "dependencies": {
+    "@hono/node-server": "^1.11.1",
+    "dotenv": "^16.4.5",
+    "hono": "^4.3.7",
+    "tsc": "^2.0.4",
+    "zod": "^3.23.8"
+  }
+}
