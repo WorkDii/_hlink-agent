@@ -16,6 +16,8 @@ const envSchema = z.object({
   JHCIS_DB_PASSWORD: z.string(),
   JHCIS_DB_PORT: z.string(),
   JHCIS_DB: z.string(),
+  DRUG_SYNC_START_DATE: z.string(),
+  DRUG_SYNC_SCHEDULE: z.string().optional(),
 });
 
-export const env = envSchema.safeParse(process.env);
+export const env = envSchema.parse(process.env);
