@@ -1,6 +1,5 @@
 import mysql from "mysql2/promise";
 import { env } from "./env";
-console.log(env);
 
 // Create the connection pool. The pool-specific settings are the defaults
 export const pool = mysql.createPool({
