@@ -11,8 +11,7 @@ const config = {
     repository: "https://github.com/WorkDii/hlink-client",
     // fromReleases: true,
     tempLocation: (0, os_1.tmpdir)(),
-    // executeOnComplete:
-    //   "/startTest.bat",
+    // executeOnComplete: "/startTest.bat",
     exitOnComplete: true,
     branch: "main",
 };
