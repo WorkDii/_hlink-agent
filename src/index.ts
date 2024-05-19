@@ -5,7 +5,7 @@ import { startUpdateAdapter } from "./updateAdapter";
 
 const app = new Hono();
 app.get("/", (c) => {
-  return c.json({ message: "Hello World 4" });
+  return c.json({ message: "Hello World 7" });
 });
 
 serve({
