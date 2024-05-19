@@ -5,7 +5,7 @@ const hono_1 = require("hono");
 const sync_visitdrug_1 = require("./sync_visitdrug");
 const app = new hono_1.Hono();
 app.get("/", (c) => {
-    return c.json({ message: "Hello World 3" });
+    return c.json({ message: "Hello World 4" });
 });
 (0, node_server_1.serve)({
     fetch: app.fetch,
