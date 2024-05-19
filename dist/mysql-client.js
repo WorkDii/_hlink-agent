@@ -6,7 +6,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.pool = void 0;
 const promise_1 = __importDefault(require("mysql2/promise"));
 const env_1 = require("./env");
-console.log(env_1.env);
 // Create the connection pool. The pool-specific settings are the defaults
 exports.pool = promise_1.default.createPool({
     host: env_1.env.JHCIS_DB_SERVER,
