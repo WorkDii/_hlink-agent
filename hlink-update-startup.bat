@@ -1,1 +1,0 @@
-pm2 start ./updateAdapter.mjs --name=hlink-client-updateAdapter
