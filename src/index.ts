@@ -5,7 +5,7 @@ import { startSync } from "./sync_visitdrug";
 
 const app = new Hono();
 app.get("/", (c) => {
-  return c.json({ message: "Hello World" });
+  return c.json({ message: "Hello World 1" });
 });
 
 serve({
