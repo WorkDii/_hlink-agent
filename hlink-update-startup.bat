@@ -1,1 +1,1 @@
-pm2 start ./updateAdapter.js --name=hlink-client-updateAdapter
+pm2 start ./updateAdapter.mjs --name=hlink-client-updateAdapter
