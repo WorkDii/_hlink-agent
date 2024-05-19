@@ -1,6 +1,6 @@
 {
   "name": "hlink-client",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "main": "dist/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -23,6 +23,7 @@
   "dependencies": {
     "@directus/sdk": "^16.0.0",
     "@hono/node-server": "^1.11.1",
+    "auto-git-update": "^1.1.1",
     "cross-env": "^7.0.3",
     "date-fns": "^3.6.0",
     "dotenv": "^16.4.5",
