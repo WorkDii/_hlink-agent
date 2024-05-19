@@ -23,7 +23,7 @@
   "dependencies": {
     "@directus/sdk": "^16.0.0",
     "@hono/node-server": "^1.11.1",
-    "auto-git-update": "^1.1.1",
+    "auto-git-update": "^2.1.2",
     "cross-env": "^7.0.3",
     "date-fns": "^3.6.0",
     "dotenv": "^16.4.5",
