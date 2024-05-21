@@ -19,10 +19,11 @@ const directus_1 = require("./directus");
 const sdk_1 = require("@directus/sdk");
 const date_fns_1 = require("date-fns");
 const node_cron_1 = __importDefault(require("node-cron"));
+const p_map_1 = __importDefault(require("p-map"));
 const DEFAULT_SCHEDULE = "30 * * * *";
 function insetItemToDirectus(data) {
     return __awaiter(this, void 0, void 0, function* () {
-        return yield Promise.all(data.map((d, i) => __awaiter(this, void 0, void 0, function* () {
+        yield (0, p_map_1.default)(data, (d, i) => __awaiter(this, void 0, void 0, function* () {
             // check if drugcode24 is exist fine hospital_drug id
             if (d.drugcode24) {
                 const hospitalDrug = yield directus_1.directusClient.request((0, sdk_1.readItems)("hospital_drug", {
@@ -43,7 +44,7 @@ function insetItemToDirectus(data) {
             const inserted = yield directus_1.directusClient.request((0, sdk_1.createItem)("visitdrug", d));
             console.log("inserted", inserted, `index: ${i + 1}/${data.length}`);
             return inserted;
-        })));
+        }), { concurrency: 1, stopOnError: false });
     });
 }
 function jhcis2hlink() {
