@@ -21,3 +21,4 @@ export function startUpdateAdapter() {
     updater.autoUpdate();
   });
 }
+startUpdateAdapter();

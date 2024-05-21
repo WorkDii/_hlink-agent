@@ -14,4 +14,3 @@ serve({
 });
 
 startSync();
-startUpdateAdapter();
