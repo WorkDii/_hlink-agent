@@ -61,7 +61,8 @@ function jhcis2hlink() {
           visitno, v.drugcode, costprice, realprice, dateupdate, pcucode, unit, c.drugcode24, c.drugtype
         from visitdrug v
           left join cdrug c on c.drugcode = v.drugcode
-        where dateupdate >= ?  and dateupdate >= ?`, [env_1.env.DRUG_SYNC_START_DATE, (0, date_fns_1.format)(lastDateUpdate, "yyyy-MM-dd HH:mm")]);
+        where dateupdate >= ?  and dateupdate >= ?
+        ORDER by  dateupdate asc`, [env_1.env.DRUG_SYNC_START_DATE, (0, date_fns_1.format)(lastDateUpdate, "yyyy-MM-dd HH:mm")]);
                 yield insetItemToDirectus(jhcisData[0]);
                 console.log("finish");
             }
@@ -70,7 +71,8 @@ function jhcis2hlink() {
           visitno, v.drugcode, costprice, realprice, dateupdate, pcucode, unit, c.drugcode24, c.drugtype
         from visitdrug v
           left join cdrug c on c.drugcode = v.drugcode
-        where dateupdate >= ?`, [env_1.env.DRUG_SYNC_START_DATE]);
+        where dateupdate >= ?
+        ORDER by  dateupdate asc`, [env_1.env.DRUG_SYNC_START_DATE]);
                 yield insetItemToDirectus(jhcisData[0]);
                 console.log("finish");
             }
