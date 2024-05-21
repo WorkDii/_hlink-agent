@@ -5,6 +5,7 @@ import { directusClient } from "./directus";
 import { createItem, deleteItems, readItems } from "@directus/sdk";
 import { format } from "date-fns";
 import cron from "node-cron";
+import pMap from "p-map";
 
 const DEFAULT_SCHEDULE = "30 * * * *";
 
@@ -21,8 +22,9 @@ type VisitDrug = RowDataPacket & {
 };
 
 async function insetItemToDirectus(data: VisitDrug[]) {
-  return await Promise.all(
-    data.map(async (d, i) => {
+  await pMap(
+    data,
+    async (d, i) => {
       // check if drugcode24 is exist fine hospital_drug id
       if (d.drugcode24) {
         const hospitalDrug = await directusClient.request<{ id: string }[]>(
@@ -47,7 +49,8 @@ async function insetItemToDirectus(data: VisitDrug[]) {
       const inserted = await directusClient.request(createItem("visitdrug", d));
       console.log("inserted", inserted, `index: ${i + 1}/${data.length}`);
       return inserted;
-    })
+    },
+    { concurrency: 1, stopOnError: false }
   );
 }
 async function jhcis2hlink() {
