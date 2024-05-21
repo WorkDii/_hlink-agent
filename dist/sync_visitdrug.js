@@ -82,6 +82,8 @@ function jhcis2hlink() {
 function startSync() {
     console.log("start sync visitdrug", new Date());
     const schedule = env_1.env.DRUG_SYNC_SCHEDULE || DEFAULT_SCHEDULE;
+    console.log("initial sync on start");
+    jhcis2hlink();
     node_cron_1.default.schedule(schedule, () => {
         console.log(`running a task every ${schedule} NOW IS `, new Date());
         jhcis2hlink();
