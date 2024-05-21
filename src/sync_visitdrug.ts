@@ -69,7 +69,8 @@ async function jhcis2hlink() {
           visitno, v.drugcode, costprice, realprice, dateupdate, pcucode, unit, c.drugcode24, c.drugtype
         from visitdrug v
           left join cdrug c on c.drugcode = v.drugcode
-        where dateupdate >= ?  and dateupdate >= ?`,
+        where dateupdate >= ?  and dateupdate >= ?
+        ORDER by  dateupdate asc`,
         [env.DRUG_SYNC_START_DATE, format(lastDateUpdate, "yyyy-MM-dd HH:mm")]
       );
       await insetItemToDirectus(jhcisData[0]);
@@ -80,7 +81,8 @@ async function jhcis2hlink() {
           visitno, v.drugcode, costprice, realprice, dateupdate, pcucode, unit, c.drugcode24, c.drugtype
         from visitdrug v
           left join cdrug c on c.drugcode = v.drugcode
-        where dateupdate >= ?`,
+        where dateupdate >= ?
+        ORDER by  dateupdate asc`,
         [env.DRUG_SYNC_START_DATE]
       );
       await insetItemToDirectus(jhcisData[0]);
