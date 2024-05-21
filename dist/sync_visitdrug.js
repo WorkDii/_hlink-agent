@@ -19,7 +19,7 @@ const directus_1 = require("./directus");
 const sdk_1 = require("@directus/sdk");
 const date_fns_1 = require("date-fns");
 const node_cron_1 = __importDefault(require("node-cron"));
-const p_map_1 = __importDefault(require("p-map"));
+const p_map_1 = __importDefault(require("@cjs-exporter/p-map"));
 const DEFAULT_SCHEDULE = "30 * * * *";
 function insetItemToDirectus(data) {
     return __awaiter(this, void 0, void 0, function* () {

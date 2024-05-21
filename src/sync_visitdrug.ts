@@ -5,7 +5,7 @@ import { directusClient } from "./directus";
 import { createItem, deleteItems, readItems } from "@directus/sdk";
 import { format } from "date-fns";
 import cron from "node-cron";
-import pMap from "p-map";
+import pMap from "@cjs-exporter/p-map";
 
 const DEFAULT_SCHEDULE = "30 * * * *";
 
