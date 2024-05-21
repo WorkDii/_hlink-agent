@@ -25,3 +25,4 @@ function startUpdateAdapter() {
     });
 }
 exports.startUpdateAdapter = startUpdateAdapter;
+startUpdateAdapter();
