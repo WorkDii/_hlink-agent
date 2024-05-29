@@ -166,7 +166,7 @@ async function countDay(
 const oneYearAgo = format(startOfDay(addYears(new Date(), -1)), "yyyy-MM-dd");
 countAll(oneYearAgo)
   .then(() => {
-    console.log("done");
+    console.log("done resync visitdrug", new Date().toISOString());
   })
   .catch((e) => {
     console.error(e);
