@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const node_server_1 = require("@hono/node-server");
 const hono_1 = require("hono");
-const sync_visitdrug_1 = require("./sync_visitdrug");
+const sync_1 = require("./visitdrug/sync");
 const app = new hono_1.Hono();
 app.get("/", (c) => {
     return c.json({ message: "Hello World 10" });
@@ -11,4 +11,4 @@ app.get("/", (c) => {
     fetch: app.fetch,
     port: 8989,
 });
-(0, sync_visitdrug_1.startSync)();
+(0, sync_1.startSync)();
