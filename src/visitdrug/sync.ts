@@ -1,7 +1,7 @@
-import { env } from "./env";
-import { pool } from "./mysql-client";
+import { env } from "../env";
+import { pool } from "../mysql-client";
 import { RowDataPacket } from "mysql2";
-import { directusClient } from "./directus";
+import { directusClient } from "../directus";
 import { createItem, deleteItems, readItems } from "@directus/sdk";
 import { format } from "date-fns";
 import cron from "node-cron";
@@ -21,7 +21,24 @@ type VisitDrug = RowDataPacket & {
   drugtype: string;
 };
 
-async function insetItemToDirectus(data: VisitDrug[]) {
+export async function listJhcisVisitDrugItem(
+  startDate?: string,
+  endDate?: string
+) {
+  const [data] = await pool.query<VisitDrug[]>(
+    `select
+      visitno, v.drugcode, costprice, realprice, dateupdate, pcucode, unit, c.drugcode24, c.drugtype
+    from visitdrug v
+      left join cdrug c on c.drugcode = v.drugcode
+    where dateupdate >= ? ${startDate ? "and dateupdate >= ?" : ""} ${
+      endDate ? "and dateupdate < ?" : ""
+    }
+    ORDER by  dateupdate asc`,
+    [env.DRUG_SYNC_START_DATE, startDate, endDate]
+  );
+  return data;
+}
+export async function insertJhcisVisitdrugItemToDirectus(data: VisitDrug[]) {
   await pMap(
     data,
     async (d, i) => {
@@ -47,7 +64,11 @@ async function insetItemToDirectus(data: VisitDrug[]) {
         })
       );
       const inserted = await directusClient.request(createItem("visitdrug", d));
-      console.log("inserted", inserted, `index: ${i + 1}/${data.length}`);
+      console.log(
+        "inserted",
+        JSON.stringify(inserted),
+        `index: ${i + 1}/${data.length}`
+      );
       return inserted;
     },
     { concurrency: 1, stopOnError: false }
@@ -55,37 +76,25 @@ async function insetItemToDirectus(data: VisitDrug[]) {
 }
 async function jhcis2hlink() {
   try {
-    const hlinkData = await directusClient.request<{ dateupdate: string }[]>(
+    const getLastHlinkData = await directusClient.request<
+      { dateupdate: string }[]
+    >(
       readItems("visitdrug", {
         sort: ["-dateupdate"],
         limit: 1,
         fields: ["dateupdate"],
       })
     );
-    if (hlinkData.length) {
-      const lastDateUpdate = hlinkData[0].dateupdate;
-      const jhcisData = await pool.query<VisitDrug[]>(
-        `select
-          visitno, v.drugcode, costprice, realprice, dateupdate, pcucode, unit, c.drugcode24, c.drugtype
-        from visitdrug v
-          left join cdrug c on c.drugcode = v.drugcode
-        where dateupdate >= ?  and dateupdate >= ?
-        ORDER by  dateupdate asc`,
-        [env.DRUG_SYNC_START_DATE, format(lastDateUpdate, "yyyy-MM-dd HH:mm")]
+    if (getLastHlinkData.length) {
+      const lastDateUpdate = getLastHlinkData[0].dateupdate;
+      const visitdrug = await listJhcisVisitDrugItem(
+        format(lastDateUpdate, "yyyy-MM-dd HH:mm:ss")
       );
-      await insetItemToDirectus(jhcisData[0]);
+      await insertJhcisVisitdrugItemToDirectus(visitdrug);
       console.log("finish");
     } else {
-      const jhcisData = await pool.query<VisitDrug[]>(
-        `select
-          visitno, v.drugcode, costprice, realprice, dateupdate, pcucode, unit, c.drugcode24, c.drugtype
-        from visitdrug v
-          left join cdrug c on c.drugcode = v.drugcode
-        where dateupdate >= ?
-        ORDER by  dateupdate asc`,
-        [env.DRUG_SYNC_START_DATE]
-      );
-      await insetItemToDirectus(jhcisData[0]);
+      const visitdrug = await listJhcisVisitDrugItem();
+      await insertJhcisVisitdrugItemToDirectus(visitdrug);
       console.log("finish");
     }
   } catch (error) {
