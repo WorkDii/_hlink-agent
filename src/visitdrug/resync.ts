@@ -130,6 +130,11 @@ async function countDay(
     jhcisData,
     async (jD) => {
       const thisDate = format(jD.dateupdate, "yyyy-MM-dd");
+      if (thisDate === format(new Date(), "yyyy-MM-dd")) {
+        // prevent bug when today is not finished
+        console.log("skip today");
+        return Promise.resolve();
+      }
       const nextDate = format(addDays(jD.dateupdate, 1), "yyyy-MM-dd");
 
       const hlinkData = await directusClient.request<
