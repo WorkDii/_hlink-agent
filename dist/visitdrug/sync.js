@@ -70,7 +70,7 @@ function jhcis2hlink() {
             }));
             if (getLastHlinkData.length) {
                 const lastDateUpdate = getLastHlinkData[0].dateupdate;
-                const visitdrug = yield listJhcisVisitDrugItem((0, date_fns_1.format)((0, date_fns_1.addMilliseconds)(lastDateUpdate, 1), "yyyy-MM-dd HH:mm:ss"));
+                const visitdrug = yield listJhcisVisitDrugItem((0, date_fns_1.format)((0, date_fns_1.addSeconds)(lastDateUpdate, 1), "yyyy-MM-dd HH:mm:ss"));
                 yield insertJhcisVisitdrugItemToDirectus(visitdrug);
                 console.log("finish");
             }
