@@ -3,7 +3,7 @@ import { pool } from "../mysql-client";
 import { RowDataPacket } from "mysql2";
 import { directusClient } from "../directus";
 import { createItem, deleteItems, readItems } from "@directus/sdk";
-import { format } from "date-fns";
+import { format, addMilliseconds } from "date-fns";
 import cron from "node-cron";
 import pMap from "@cjs-exporter/p-map";
 
@@ -88,7 +88,7 @@ async function jhcis2hlink() {
     if (getLastHlinkData.length) {
       const lastDateUpdate = getLastHlinkData[0].dateupdate;
       const visitdrug = await listJhcisVisitDrugItem(
-        format(lastDateUpdate, "yyyy-MM-dd HH:mm:ss")
+        format(addMilliseconds(lastDateUpdate, 1), "yyyy-MM-dd HH:mm:ss")
       );
       await insertJhcisVisitdrugItemToDirectus(visitdrug);
       console.log("finish");
