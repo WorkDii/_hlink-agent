@@ -28,6 +28,8 @@ function removeItemHLink(startDate, endDate) {
                 _lt: endDate,
             },
         },
+        // fix remove all data filtered
+        limit: -1,
     }));
 }
 function countAll(startDate) {

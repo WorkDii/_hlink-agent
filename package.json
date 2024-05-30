@@ -1,6 +1,6 @@
 {
   "name": "hlink-client",
-  "version": "0.1.20",
+  "version": "0.1.21",
   "main": "dist/index.js",
   "scripts": {
     "test": "vitest -w",
