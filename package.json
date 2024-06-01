@@ -5,7 +5,7 @@
   "scripts": {
     "test": "vitest -w",
     "build": "tsc",
-    "build-sea": "node build.js",
+    "build-sea": "node build/build.js",
     "dev": "tsx watch src/index.ts",
     "start": "cross-env NODE_ENV=production node dist/index.js",
     "preversion": "npm run build && git add -A dist"

@@ -1,4 +1,5 @@
 var rimraf = require("rimraf");
+const join = require('path').join;
 
 function execShellCommand(cmd) {
   const exec = require('child_process').exec;
@@ -12,16 +13,16 @@ function execShellCommand(cmd) {
   });
  }
 async function main(params) {
-  rimraf.sync('dist');
+  const rootProject = process.cwd()
+  rimraf.sync(join(rootProject, 'dist'));
   console.log('remove dist');
-  rimraf.sync('out');
+  rimraf.sync(join(rootProject,'out'));
   console.log('remove out');
   await execShellCommand('tsc')
   console.log('build tsc');
-  await execShellCommand('esbuild dist/index.js --bundle --platform=node --outfile=out/out.js --minify')
+  await execShellCommand(`esbuild dist/index.js --bundle --platform=node --outfile=out/out.js --minify`)
   console.log('pack to one file');
-  await execShellCommand('node --experimental-sea-config sea-config.json')
-  console.log('pack to sea');
+  await execShellCommand('node --experimental-sea-config build/sea-config.json')
   await execShellCommand(`node -e "require('fs').copyFileSync(process.execPath, 'out/hlink-client.exe')"`)
   console.log('copy node to hlink-client.exe');
   await execShellCommand(`npx postject out/hlink-client.exe NODE_SEA_BLOB out/sea-prep.blob --sentinel-fuse NODE_SEA_FUSE_fce680ab2cc467b6e072b8b5df1996b2`)
